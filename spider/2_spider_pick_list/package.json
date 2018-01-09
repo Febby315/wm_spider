@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "title 2_spider_pick_list && roadhog server",
+    "build": "roadhog build",
+    "lint": "eslint --ext .js src test",
+    "1precommit": "npm run lint"
+  },
+  "engines": {
+    "install-node": "6.9.2"
+  },
+  "dependencies": {
+    "sync-request": "^4.0.2"
+  }
+}
