@@ -26,6 +26,6 @@ lsList.forEach(function ({id:id,ls:ls},i) {
 		console.error("[%s]Phantom_Error:",ls.pid,err||"[unknown error]");
 	});
 	ls.on("exit", (code,signal) => {
-		console.log("[%s]Phantom_Exit(%s):",ls.pid,code,signal||"");
+		console.log("[%s]Phantom_Exit:%s",ls.pid,code,signal||"");
 	});
 });

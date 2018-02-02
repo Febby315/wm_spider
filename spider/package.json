@@ -9,7 +9,7 @@
   "author": "Febby315",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "^0.22.0",
     "moment": "^2.20.1",
     "sync-request": "^4.1.0",
     "uuid": "^3.2.1"

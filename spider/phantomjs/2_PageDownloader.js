@@ -33,7 +33,6 @@ function send(json) {
     //打开新窗口调用接口将数据传回服务器后退出当前进程
     var sendPage = webpage.create();
     sendPage.open(config.db_server_url + config.db_list_source_edit,options,function(status) {
-        console.log(sendPage.content);
         setTimeout(phantom.exit(status.toUpperCase() === "SUCCESS"?0:1),1000);
     });
 }

@@ -13,19 +13,19 @@ for(let i=0,len=data.length;i<len;i++){
 		];
 		let ls_temp = spawn("phantomjs", params);
 		lsList.push({ id:data[i]._id,ls:ls_temp });
-		console.log("OPEN[pid=%s]:%s",ls_temp.pid, data[i].detail_url);
+		console.log("OPEN[pid=%s]:%s",ls_temp.pid, data[i].list_url);
 	}catch(err){
-		console.error("ERROR:%s[%s]\n%s",data[i].detail_url,data[i]._id,err);
+		console.error("ERROR:%s[%s]\n%s",data[i].list_url,data[i]._id,err);
 	}
 }
 lsList.forEach(function ({id:id,ls:ls},i) {
 	ls.stdout.on("data", (msg) => {
-		console.log("[%s]Phantom_Print:",ls.pid,msg||"[unknown msg]");
+		console.log("[%s]Phantom_Print:",ls.pid,""+msg||"[unknown msg]");
 	});
 	ls.stderr.on("data", (err) => {
 		console.error("[%s]Phantom_Error:",ls.pid,err||"[unknown error]");
 	});
 	ls.on("exit", (code,signal) => {
-		console.log("[%s]Phantom_Exit(%s):",ls.pid,code,signal||"");
+		console.log("[%s]Phantom_Exit:%s",ls.pid,code,signal||"");
 	});
 });
