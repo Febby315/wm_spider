@@ -24,7 +24,7 @@ for (let i = 0, len = data.length; i < len; i++) {
 			sendAdd();
 			send.post(config.db_server_url + config.db_list_detail_source_edit, editparam);
 		} catch (err) {
-			console.error("[PARSE_DETAIL_ERROR]:%s(%s)\n%s",data[i].detail_url,data[i]._id,err);
+			console.error("[PARSE_DETAIL_ERROR]:%s (%s)\n%s",data[i].detail_url,data[i]._id,err);
 			editparam.dealStatus = 99;
 			send.post(config.db_server_url + config.db_list_detail_source_edit, editparam);
 		}

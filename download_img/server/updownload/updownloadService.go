@@ -70,8 +70,8 @@ func Download(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		fmt.Printf("文件下载中:%s\n", param.ImgSrc)
 		fPath := path.Join(mkURL, param.ImgURL, param.ImgName)
 		if err := downFile(fUrl, fPath); err != nil { //下载图片
-			fmt.Print(err)
-			jsonStr, _ := json.Marshal(map[string]interface{}{"state": 99, "msg": "文件下载失败"})
+			fmt.Println(err.Error())
+			jsonStr, _ := json.Marshal(map[string]interface{}{"state": 99, "msg": err.Error(), "src": param.ImgSrc})
 			w.Write(jsonStr)
 			return
 		}
@@ -91,6 +91,6 @@ func Download(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		// 	}
 		// }
 	}
-	jsonStr, _ := json.Marshal(map[string]interface{}{"state": 0, "msg": "文件下载成功"})
+	jsonStr, _ := json.Marshal(map[string]interface{}{"state": 0, "msg": "文件下载成功", "src": param.ImgSrc})
 	w.Write(jsonStr)
 }

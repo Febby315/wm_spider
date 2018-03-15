@@ -20,12 +20,12 @@ for(let i=0,len=data.length;i<len;i++){
 }
 lsList.forEach(function ({id:id,ls:ls},i) {
 	ls.stdout.on("data", (msg) => {
-		console.log("[%s]Phantom_Print:",ls.pid,msg||"[unknown msg]");
+		console.log("[%s]Phantom_Print:",ls.pid,String(msg));
 	});
 	ls.stderr.on("data", (err) => {
-		console.error("[%s]Phantom_Error:",ls.pid,err||"[unknown error]");
+		console.error("[%s]Phantom_Error:",ls.pid,String(err));
 	});
 	ls.on("exit", (code,signal) => {
-		console.log("[%s]Phantom_Exit:%s",ls.pid,code,signal||"");
+		console.log("[%s]Phantom_Exit:%s",ls.pid,code,String(signal));
 	});
 });

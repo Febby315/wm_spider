@@ -22,7 +22,7 @@ for (let i = 0, len = data.length; i < len; i++) {
 		data[i].clean_rule_list?eval(data[i].clean_rule_list):null;
 		send.post(config.db_server_url + config.db_list_source_edit, editparam);
 	} catch (err) {
-		console.error("[PARSE_LIST_ERROR]:%s(%s)\n%s",data[i].list_url,data[i]._id,err);
+		console.error("[PARSE_LIST_ERROR]:%s (%s)\n%s",data[i].list_url,data[i]._id,err);
 		editparam.status = 99;
 		send.post(config.db_server_url + config.db_list_source_edit, editparam);
 	}
