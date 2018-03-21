@@ -60,6 +60,6 @@ function downimg(contentImageSourOne, src) {
 		contentImageSourOne.url = ["{IMG}",filepath,filename].join("/");
 		let ret = send.post(config.db_server_down_url + config.download_do, { img_src: src, img_url: filepath, img_name: filename });
 		console.log("下载状态", ret);
-		send.post(config.db_server_down_url + config.downImg_add, { img_src: src, img_url: contentImageSourOne.url , img_name: filename, dealStatus: ret });
+		send.post(config.db_server_down_url + config.downImg_add, { img_src: src, img_url: contentImageSourOne.url , img_name: filename, dealStatus: ret.state });
 	}
 }

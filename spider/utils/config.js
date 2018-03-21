@@ -48,6 +48,25 @@ function clone(myObj){
     }else{ myNewObj = myObj; }
     return myNewObj; 
 }
+//日期格式化
+Date.prototype.format = function(fmt) {
+    var o = {
+      "M+": String(this.getMonth() + 1), //月份
+      "D+": String(this.getDate()), //日
+      "H+": String(this.getHours()%12), //24小时
+      "h+": String(this.getHours()), //12小时
+      "m+": String(this.getMinutes()), //分
+      "s+": String(this.getSeconds()) //秒
+    };
+    if (/(y+)/i.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1,String(this.getFullYear()).substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+      if (new RegExp("(" + k + ")").test(fmt))
+        fmt = fmt.replace(RegExp.$1,RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(o[k].length));
+    }
+    return fmt;
+  };
 
 module.exports = config;
 module.exports.clone = clone;
