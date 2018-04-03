@@ -7,7 +7,7 @@ import (
 	"../../utils"
 
 	"github.com/julienschmidt/httprouter"
-	uuid "github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -18,7 +18,8 @@ func Add(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	editinst := Price{}
 	json.NewDecoder(r.Body).Decode(&editinst)
 	editinst.ID = bson.NewObjectId()
-	editinst.Useid = uuid.NewV4().String()
+	t_uuid, _ := uuid.NewV4()
+	editinst.Useid = t_uuid.String()
 	editinst.Version = 0
 	result, query := []Price{}, map[string]interface{}{"name": editinst.Name, "marketname": editinst.Marketname, "publishDate": editinst.PublishDate}
 	if err := conn.Find(&query).All(&result); err != nil || len(result) > 0 {

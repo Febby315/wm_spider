@@ -7,7 +7,7 @@ import (
 	"../../utils"
 
 	"github.com/julienschmidt/httprouter"
-	uuid "github.com/satori/go.uuid"
+	"github.com/satori/go.uuid"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -18,7 +18,8 @@ func Add(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	editinst := Buy{}
 	json.NewDecoder(r.Body).Decode(&editinst)
 	editinst.ID = bson.NewObjectId()
-	editinst.TransactionId = uuid.NewV4().String()
+	t_uuid, _ := uuid.NewV4()
+	editinst.TransactionId = t_uuid.String()
 	editinst.Version = 0
 	result, query := []Buy{}, map[string]interface{}{"contentUrl": editinst.ContentUrl}
 	if err := conn.Find(&query).All(&result); err != nil || len(result) > 0 {
