@@ -31,8 +31,4 @@ func init() {
 
 	//新版文件下载
 	R.POST(utils.GetStringValue("api", "updownload")+"/download", updownload.Download)
-
-	// 旧版文件下载
-	// R.POST(utils.GetStringValue("api", "download"), download.Down)
-	// R.POST(utils.GetStringValue("api", "download")+"/makesmallimg", download.MakeSmallImg)
 }

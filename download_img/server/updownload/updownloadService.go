@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -17,10 +17,6 @@ import (
 )
 
 var mkURL = utils.GetStringValue("uploadfile", "savepath")
-
-// var smallMkURL = utils.GetStringValue("uploadfile", "smallsavepath")
-// var smallimglength = utils.GetIntValue("uploadfile", "smallimglength")
-// var smallimghight = utils.GetIntValue("uploadfile", "smallimghight")
 
 //下载文件
 func downFile(fUrl *url.URL, outpath string) (err error) {
@@ -52,7 +48,7 @@ func downFile(fUrl *url.URL, outpath string) (err error) {
 			return errors.New("远程文件复制失败")
 		}
 		//无异常返回
-		fmt.Printf("输出文件:%s\n", outpath)
+		log.Printf("输出文件:%s\n", outpath)
 	}
 	return
 }
@@ -67,29 +63,14 @@ func Download(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		w.Write(jsonStr)
 		return
 	} else {
-		fmt.Printf("文件下载中:%s\n", param.ImgSrc)
+		log.Printf("文件下载中:%s\n", param.ImgSrc)
 		fPath := path.Join(mkURL, param.ImgURL, param.ImgName)
 		if err := downFile(fUrl, fPath); err != nil { //下载图片
-			fmt.Println(err.Error())
+			log.Println(err.Error())
 			jsonStr, _ := json.Marshal(map[string]interface{}{"state": 99, "msg": err.Error(), "src": param.ImgSrc})
 			w.Write(jsonStr)
 			return
 		}
-		// else {
-		// 	//获取文件后缀
-		// 	suffix := strings.ToUpper(path.Ext(fPath))
-		// 	//缩略图保存路径
-		// 	smallPath := path.Join(smallMkURL, param.ImgURL, param.ImgName)
-		// 	//读取需要创建缩略图的后缀
-		// 	thumbnailSuffix, sep := utils.GetStringValue("uploadfile", "thumbnailSuffix"), "|"
-		// 	if n := strings.Index(thumbnailSuffix, sep+suffix+sep); n >= 0 {
-		// 		if err := CreateThumbnail(fPath, smallPath); err != nil {
-		// 			jsonStr, _ := json.Marshal(map[string]interface{}{"state": 99, "msg": "缩略图生成失败"})
-		// 			w.Write(jsonStr)
-		// 			return
-		// 		}
-		// 	}
-		// }
 	}
 	jsonStr, _ := json.Marshal(map[string]interface{}{"state": 0, "msg": "文件下载成功", "src": param.ImgSrc})
 	w.Write(jsonStr)
