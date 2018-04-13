@@ -33,6 +33,6 @@ for (let i = 0, len = data.length; i < len; i++) {
 //发送解析结果函数
 function sendAdd() {
 	if (param && param.content_sour) {
-		send.post(config.db_server_url + config.db_list_detail_cleand_add, param);
+		send.post(config.db_server_url + config.db_list_detail_cleaned_add, param);
 	}else{ console.warn("[WARNING]%s:%s", param.detail_url, "详情有空数据"); }
 }

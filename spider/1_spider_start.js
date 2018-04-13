@@ -28,7 +28,7 @@ while (ishave) {
 					param.from_url = url[from_url_num];
 					param.query_conf = conf[num];
 					param.parent_id = data[i]._id;
-					send.post(config.db_server_url + config.db_spider_list_source_add, param);
+					send.post(config.db_server_url + config.db_list_source_add, param);
 				}
 			}
 		} else if (more_page_model && more_page_model.indexOf("{PAGE}") > -1) {
@@ -39,7 +39,7 @@ while (ishave) {
 				param.operate_date = operdate;
 				param.list_url = more_page_model.replace("{PAGE}", num);
 				param.parent_id = data[i]._id;
-				send.post(config.db_server_url + config.db_spider_list_source_add, param);
+				send.post(config.db_server_url + config.db_list_source_add, param);
 			}
 		} else {
 			var param = config.clone(data[i]);
@@ -48,7 +48,7 @@ while (ishave) {
 			param.operate_date = operdate;
 			param.list_url = more_page_model;
 			param.parent_id = data[i]._id;
-			send.post(config.db_server_url + config.db_spider_list_source_add, param);
+			send.post(config.db_server_url + config.db_list_source_add, param);
 		}
 	}
 }
