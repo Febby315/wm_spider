@@ -13,8 +13,7 @@ import (
 
 //Add 新增
 func Add(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	utils.PrintReqLog(r)
-
+	w = utils.EnableXDA(w, r) //跨域请求及日志
 	editinst := Price{}
 	json.NewDecoder(r.Body).Decode(&editinst)
 	editinst.ID = bson.NewObjectId()
@@ -27,7 +26,6 @@ func Add(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		w.Write(jsonStr)
 		return
 	}
-
 	if err := conn.Insert(editinst); err != nil {
 		jsonStr, _ := json.Marshal(map[string]interface{}{"state": "fail", "msg": "新增记录失败:请联系管理员"})
 		w.Write(jsonStr)

@@ -13,8 +13,8 @@ import (
 	"./server/recruit"           //招聘
 	"./server/sell"              //供应
 	"./server/spiderconfig"      //脚本配置
-	"./server/tagArticle"
-	"./utils" //工具箱
+	"./server/tagArticle"        //标签文章
+	"./utils"                    //工具箱
 
 	"github.com/julienschmidt/httprouter"
 )

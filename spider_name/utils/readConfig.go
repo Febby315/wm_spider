@@ -1,10 +1,9 @@
 package utils
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/widuu/goini"
 )
@@ -21,22 +20,16 @@ func GetStringValue(secName string, keyName string) string {
 func GetIntValue(secName string, keyName string) int {
 	val, err := strconv.Atoi(ReadConfig.GetValue(secName, keyName))
 	if err != nil {
-		fmt.Println("字符串转换成整数失败")
+		log.Println("字符串转换成整数失败")
 	}
 	return val
 }
 
-//PrintReqLog 打印请求日志
-func PrintReqLog(r *http.Request) {
-	t, m, u := time.Now().Format("2006-01-02 15:04:05"), r.Method, r.URL
-	fmt.Printf("%s %s %s\n", t, m, u)
-	// switch runtime.GOOS {
-	// case "windows":
-	// 	fmt.Printf("%s %s %s\n", t, m, u)
-	// case "linux":
-	// 	d, b, f := 0, 40, 32
-	// 	fmt.Printf("%c %d;%d;%dm %s %c 0m %s %s\n", 0x1B, d, b, f, t, 0x1B, m, u)
-	// default:
-	// 	fmt.Printf("[%s]\t%s\t%s\n", t, m, u)
-	// }
+//允许跨域及访问日志
+func EnableXDA(w http.ResponseWriter, r *http.Request) http.ResponseWriter {
+	log.Println(r.Method, r.URL)
+	w.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
+	w.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
+	w.Header().Set("content-type", "application/json")
+	return w
 }
