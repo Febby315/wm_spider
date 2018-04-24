@@ -1,8 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 
 	"./server/article"           //文章
 	"./server/buy"               //求购
@@ -15,8 +17,6 @@ import (
 	"./server/spiderconfig"      //脚本配置
 	"./server/tagArticle"        //标签文章
 	"./utils"                    //工具箱
-
-	"github.com/julienschmidt/httprouter"
 )
 
 //Port is This Server's port
@@ -60,6 +60,9 @@ func init() {
 
 //程序主入口
 func main() {
-	fmt.Println("port:" + Port)
-	http.ListenAndServe(":"+Port, R)
+	if err := http.ListenAndServe(":"+Port, R); err != nil {
+		log.Println("监听端口成功", Port)
+	} else {
+		log.Println("端口监听失败", err.Error())
+	}
 }

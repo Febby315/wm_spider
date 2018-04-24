@@ -2,6 +2,7 @@ package spiderconfig
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"../../utils"
@@ -14,12 +15,12 @@ import (
 func List(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w = utils.EnableXDA(w, r)                                                                 //跨域请求及日志
 	qparam := QueryParam{PageSize: utils.GetIntValue("database", "pageSize"), CurrentPage: 1} //获取默认分页参数
-	resultdata := []SpiderConfig{}                                                            //结果集
 	json.NewDecoder(r.Body).Decode(&qparam)                                                   //接收来自请求的分页参数
+	resultdata := []SpiderConfig{}                                                            //结果集
 	total, _ := conn.Find(&qparam.Conf).Count()
 	sort, page, size := utils.GetStringValue("database", "sortCol"), qparam.CurrentPage-1, qparam.PageSize
 	if err := conn.Find(&qparam.Conf).Sort(sort).Skip(page * size).Limit(size).All(&resultdata); err != nil {
-		panic(err)
+		log.Println("列表查询失败", err.Error())
 	}
 	result := map[string]interface{}{"total": total, "page": qparam.CurrentPage, "size": qparam.PageSize, "data": resultdata}
 	jsonStr, _ := json.Marshal(result)
