@@ -1,3 +1,4 @@
+// 详情清洗脚本DEMO文件
 if(/www\.moa\.gov\.cn\/fwllm\/qgxxlb\/qg\/\d+\/t\d+_\d+\.htm/gm.test(param.detail_url)){
 	$=cheerio.load($("div.zleft").eq(0).html(),{decodeEntities: false});
 }else{ throw "该解析模板无法解析此链接:"+param.detail_url }
