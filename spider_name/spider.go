@@ -19,9 +19,6 @@ import (
 	"./utils"                    //工具箱
 )
 
-//Port is This Server's port
-var Port = utils.GetStringValue("api", "port")
-
 //R is rotuer
 var R = httprouter.New()
 
@@ -60,6 +57,7 @@ func init() {
 
 //程序主入口
 func main() {
+	var Port = utils.GetStringValue("api", "port") //Port is This Server's port
 	if err := http.ListenAndServe(":"+Port, R); err != nil {
 		log.Println("监听端口成功", Port)
 	} else {

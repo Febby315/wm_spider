@@ -3,15 +3,14 @@ const uuid = require("uuid");
 const moment = require('moment');
 const send = require("./utils/send");
 const config = require("./utils/config");
-
+// 获取需要处理的任务
 var result = send.post(config.db_server_url + config.db_list_detail_cleaned_query,{ conf: { dealStatus: 0 } });
 var data = result.data;
 var baseDir = moment().format("YYYY-MM-DD");
 for (let i = 0, len = data.length; i < len; i++) {
-	var listImageSour=[],contentImageSour=[],attach_files_sour=[],listShowImage=[];
-	listImageSour = JSON.parse(data[i].listImageSour||"[]");	//列表图片
-	contentImageSour = JSON.parse(data[i].contentImageSour||"[]");	//内容图片
-	attach_files_sour = JSON.parse(data[i].attach_files_sour||"[]");//附件
+	let listImageSour = JSON.parse(data[i].listImageSour||"[]");	//列表图片
+	let contentImageSour = JSON.parse(data[i].contentImageSour||"[]");	//内容图片
+	let attach_files_sour = JSON.parse(data[i].attach_files_sour||"[]");//附件
 	//绝对化路径并下载
 	for (let j=0;j<listImageSour.length;j++) {
 		if (listImageSour[j]&&listImageSour[j].sour_url) {
@@ -32,14 +31,9 @@ for (let i = 0, len = data.length; i < len; i++) {
 		}
 	}
 	//合并图片数组
-	for (let j=0;j<listImageSour.length;j++) {
-		if (listImageSour[j]) { listShowImage.push({ url: listImageSour[j].url }); }
-	}
-	for (let j=0;j<contentImageSour.length;j++) {
-		if (contentImageSour[j]) { listShowImage.push({url: contentImageSour[j].url}); }
-	}
+	let listShowImage = listImageSour.map((v)=>v.url).concat(contentImageSour.map((v)=>v.url));
 	//提交修改
-	var param = {
+	let param = {
 		_id: data[i]._id,dealStatus: 1,version: data[i].version,
 		contentImageSour: JSON.stringify(contentImageSour),
 		listImageSour: JSON.stringify(listImageSour),
